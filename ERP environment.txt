@@ -1,0 +1,71 @@
+1- Install python 3.8.2
+	sudo add-apt-repository ppa:deadsnakes/ppa
+	sudo apt update
+	sudo apt install python3.8
+	sudo apt install python3.8-venv
+	sudo apt install python3-pip
+
+2-Create a python environment
+	Create a folder to save all environment (i.e. venvs)
+		mkdir venvs
+		cd venvs
+	create environment
+		python3.8 -m venv venv_3.8_ERP
+
+3-Activate environment
+	source ~/venvs/venv_3.8.2_ERP/bin/activate
+
+4-Install Ubuntu dependencies
+	Install java 1.8
+		sudo apt install build-essential
+		sudo apt install python3-dev
+		sudo apt install postgresql
+		sudo apt install postgresql-server-dev-14
+		sudo apt install libssl-dev
+		sudo apt install manpages-dev wkhtmltopdf unixodbc unixodbc-dev
+		sudo apt-get install openjdk-8-jdk
+		
+
+	Add java to the environment variables
+		Configure JAVA_HOME
+			readlink -f $(which java)
+			This will give you the path to your JDK installation. 
+			For example: /usr/lib/jvm/java-11-openjdk-amd64/jre/bin/java
+		Copy the path. 
+		Now, let’s edit your .bashrc file:
+			nano ./bashcr
+		Add the following line to the content (replace the path with your actual JDK installation path):
+			export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+			export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server
+		Save the file and then apply the changes (Ctrl+X, y, ENTER):
+			source ~/.bashrc
+		Confirm that it worked:
+			echo $JAVA_HOME
+
+	Install maven 3.8.8
+		Option 1.  sudo apt install maven
+		Option 2. 
+			cd Downloads
+			wget https://downloads.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz
+			tar -zxf apache-maven-3.8.8-bin.tar.gz /tmp/
+			sudo ln -s /tmp/apache-maven-3.8.8/bin/mvn /usr/local/bin/mvn
+
+5-Install pyreportjasper
+	Install some python dependencies for pyreportjasper
+		pip install setuptools==40.5.0 pyodbc==4.0.34 cmake==3.21.1 wheel==0.32.1
+		pip install zope.interface=4.6.0
+	Install pyreportjasper
+		pip install pyreportjasper==2.0.2
+
+6-Install requirements
+
+7-Set java library to environment variable	
+	Open 
+	sudo nano ~/.bashrc
+	Add the following line at the end
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server	
+	
+
+sudo apt-get install default-jdk
+
+
