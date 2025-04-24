@@ -1,0 +1,39 @@
+services:
+  # Servicio MySQL
+  db:
+    image: mysql:5.7
+    container_name: testrail-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: testrail
+      MYSQL_USER: testrail_user
+      MYSQL_PASSWORD: testrail_password
+    volumes:
+      - mysql-data:/var/lib/mysql  # Volumen persistente para la base de datos
+    restart: always
+
+  # Servicio PHP + Apache
+  web:
+    image: php:7.4-apache
+    container_name: testrail-web
+    depends_on:
+      - db
+    ports:
+      - "80:80"  # Puerto 80 para acceso público
+    environment:
+      - DB_HOST=db
+      - DB_NAME=testrail
+      - DB_USER=testrail_user
+      - DB_PASS=testrail_password
+    restart: always
+    volumes:
+      - ./testrail:/var/www/html
+      - ./apache-config.conf:/etc/apache2/conf-available/servername.conf
+    command: >
+      bash -c "a2enconf servername &&
+              if ! php -m | grep -q mysqli; then docker-php-ext-install mysqli; fi &&
+              service apache2 start"
+
+# Definición de volúmenes
+volumes:
+  mysql-data:  # Volumen para persistir los datos de MySQL
